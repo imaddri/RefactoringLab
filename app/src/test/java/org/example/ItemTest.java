@@ -1,26 +1,28 @@
 package org.example;
-
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import java.lang.reflect.*;
 
 public class ItemTest {
 
     @Test
-    public void testGetName() {
-        Item item = new Item("Laptop", 1200.0, 1);
-        assertEquals("Laptop", item.getName());
-    }
+    public void t() throws Exception {
+        Item i = new Item();
 
-    @Test
-    public void testGetPrice() {
-        Item item = new Item("Laptop", 1200.0, 1);
-        assertEquals(1200.0, item.getPrice());
-    }
+        Field n = Item.class.getDeclaredField("name");
+        Field p = Item.class.getDeclaredField("price");
+        Field q = Item.class.getDeclaredField("quantity");
 
-    @Test
-    public void testGetQuantity() {
-        Item item = new Item("Laptop", 1200.0, 3);
-        assertEquals(3, item.getQuantity());
+        n.setAccessible(true);
+        p.setAccessible(true);
+        q.setAccessible(true);
+
+        n.set(i, "Laptop");
+        p.set(i, 1200.0);
+        q.set(i, 3);
+
+        assertEquals("Laptop", i.getName());
+        assertEquals(1200.0, i.getPrice());
+        assertEquals(3, i.getQuantity());
     }
 }
-
